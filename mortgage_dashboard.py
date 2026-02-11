@@ -1,16 +1,6 @@
-"""
-Interactive Mortgage Calculator Dashboard
-==========================================
-Using Pure PV-Based Formulas
-
-Run with: streamlit run mortgage_dashboard.py
-"""
-
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from mortgage_pv_calculator import (
     generate_amortization_schedule,
