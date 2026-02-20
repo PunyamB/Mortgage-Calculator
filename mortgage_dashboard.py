@@ -1,11 +1,3 @@
-"""
-Interactive Mortgage Calculator Dashboard
-==========================================
-Using Pure PV-Based Formulas
-
-Run with: streamlit run mortgage_dashboard.py
-"""
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -18,15 +10,15 @@ from mortgage_pv_calculator import (
 
 st.set_page_config(
     page_title="Mortgage Calculator - PV Based",
-    page_icon="🏠",
+    
     layout="wide"
 )
 
-st.title("🏠 Mortgage Calculator")
+st.title("Mortgage Calculator")
 st.subheader("Using Pure Present Value (PV) Formulas")
 st.markdown("---")
 
-st.sidebar.header("📊 Loan Parameters")
+st.sidebar.header("Loan Parameters")
 
 principal = st.sidebar.number_input(
     "Principal Amount ($)",
@@ -67,7 +59,7 @@ try:
         principal, annual_rate, years, frequency.lower()
     )
     
-    st.markdown("## 💰 Payment Summary")
+    st.markdown("Payment Summary")
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
@@ -98,7 +90,7 @@ try:
     
     st.markdown("---")
     
-    st.markdown("## 📋 Amortization Schedule (PV-Based)")
+    st.markdown("Amortization Schedule (PV-Based)")
     
     display_df = df.copy()
     display_df['Payment_Amount'] = display_df['Payment_Amount'].apply(lambda x: f"${x:,.2f}")
@@ -122,7 +114,7 @@ try:
     
     csv = df.to_csv(index=False)
     st.download_button(
-        label="📥 Download Schedule as CSV",
+        label="Download Schedule as CSV",
         data=csv,
         file_name=f"mortgage_schedule_{principal}_{annual_rate*100}pct_{years}yr.csv",
         mime="text/csv"
@@ -130,7 +122,7 @@ try:
     
     st.markdown("---")
     
-    st.markdown("## 📊 Visualization")
+    st.markdown("Visualization")
     
     tab1, tab2, tab3 = st.tabs(["Outstanding Balance", "Principal vs Interest", "Cumulative Analysis"])
     
@@ -150,7 +142,7 @@ try:
     
     st.markdown("---")
     
-    st.markdown("## 🚀 Extra Credit: Accelerated Payoff Analysis")
+    st.markdown("Extra Credit: Accelerated Payoff Analysis")
     
     st.markdown("""
     See how increasing your payment amount affects the loan payoff time and total interest paid.
@@ -181,7 +173,7 @@ try:
                 st.write(f"**Interest Saved:** {format_currency(interest_saved)}")
                 st.write(f"**New Total Interest:** {format_currency(new_df['Cumulative_Interest'].iloc[-1])}")
             
-            st.markdown("### 📊 Accelerated Payoff Schedule Comparison")
+            st.markdown("Accelerated Payoff Schedule Comparison")
             
             max_len = min(len(df), len(new_df))
             comparison_df = pd.DataFrame({
@@ -193,7 +185,7 @@ try:
             
             st.line_chart(comparison_df)
             
-            with st.expander("📋 View Accelerated Payment Schedule"):
+            with st.expander("View Accelerated Payment Schedule"):
                 display_new_df = new_df.copy()
                 display_new_df['Payment_Amount'] = display_new_df['Payment_Amount'].apply(lambda x: f"${x:,.2f}")
                 display_new_df['Interest_Paid'] = display_new_df['Interest_Paid'].apply(lambda x: f"${x:,.2f}")
@@ -209,7 +201,7 @@ try:
                 
                 st.dataframe(display_new_df, use_container_width=True, height=400)
         else:
-            st.error("⚠️ The increased payment is not sufficient to pay off the loan. Must be greater than interest-only payment.")
+            st.error("The increased payment is not sufficient to pay off the loan. Must be greater than interest-only payment.")
 
 except Exception as e:
     st.error(f"Error generating amortization schedule: {str(e)}")
